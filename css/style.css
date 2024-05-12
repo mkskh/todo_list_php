@@ -28,21 +28,6 @@ h6 {
     margin: 10px;
 }
 
-.remove-to-do {
-    display: block;
-    float: right;
-    width: 20px;
-    height: 20px;
-    font-family: sans-serif;
-    color: rgb(165, 165, 165);
-    text-decoration: none;
-    text-align: right;
-    padding: 0px 3px 5px 0px;
-    border-radius: 50%;
-    transition: background 1s;
-    cursor: pointer;
-    }
-
 .remove-to-do:hover {
     color: #000000;
     }
