@@ -1,3 +1,7 @@
+<?php
+require 'db_conn.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,19 +16,38 @@
         <h1>My Todo List</h1>
 
         <div class="add-section">
-            <form action="">
+            <form action="app/add.php" method="POST" autocomplete="off">
                 <input type="text" name="title" placeholder="Write your task">
                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
             </form>
         </div>
 
-        <div class="container" style="margin-top: 20px">
-            <div class="todo-item" style="text-align: left; margin-left: 15px;">
-                <h4>Learn php</h4>
-                <small>created 3/3/2024</small>
-            </div>
-        </div>
+        <?php
+            $todos = $conn->query("SELECT * FROM todo_list ORDER BY id DESC")
+        ?>
 
+        <?php foreach ($todos as $todo) { ?>
+            <div class="container" style="margin-top: 20px">
+                <div class="todo-item" style="text-align: left; margin-left: 15px;">
+                    <span id="<?php echo['id']; ?>" class="remove-to-do">x </span>
+                    <?php if($todo['checked']){ ?>
+                        
+                        <h4 style="margin-left: 0; text-decoration: line-through;"> 
+                            <input type="checkbox" style="margin-top: 10px" checked> <?php echo $todo['title'] ?>
+                        </h4>
+                        <small><?php echo "Created:", " ", $todo['date_time'] ?></small>
+                        
+                    <?php }else { ?>
+
+                        <h4 style="margin-left: 0"> 
+                            <input type="checkbox" style="margin-top: 10px"> <?php echo $todo['title'] ?>
+                        </h4>
+                        <small><?php echo "Created:", " ", $todo['date_time'] ?></small>
+                        
+                    <?php }?>
+                </div>
+            </div>
+        <?php }?>
     </div>
 </body>
 </html>
