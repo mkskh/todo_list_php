@@ -42,20 +42,21 @@ require 'db_conn.php';
 
             <div class="container" style="margin-top: 20px">
                 <div class="todo-item" style="text-align: left; margin-left: 15px; display: flex; justify-content: space-between;">
-
                     <div style="display: inline-block;">
+
                         <?php if($todo['checked']){ ?>
-                            
-                            <!-- if the task is completed - strikethrough the text -->
+                            <!-- if the task is COMPLETED - strikethrough the text -->
+
                             <h4 style="margin-left: 0; text-decoration: line-through;"> 
-                                <input type="checkbox" style="margin-top: 10px" checked> <?php echo $todo['title'] ?>
+                                <?php echo $todo['title'] ?>
                             </h4>
                             <small><?php echo "Created:", " ", $todo['date_time'] ?></small>
                             
+                        <!-- ELSE (not completed) -->
                         <?php }else { ?>
 
                             <h4 style="margin-left: 0"> 
-                                <input type="checkbox" style="margin-top: 10px"> <?php echo $todo['title'] ?>
+                                <?php echo $todo['title'] ?>
                             </h4>
                             <small><?php echo "Created:", " ", $todo['date_time'] ?></small>
                             
@@ -63,10 +64,26 @@ require 'db_conn.php';
                     </div>
 
                     <div style="display: inline-block; text-align:right; margin-top: 10px;">
-                        <form action="app/remove.php" method="post" >
-                            <input type="hidden" name="id" value="<?php echo $todo['id']; ?>">
-                            <button type="submit">x</button>
-                        </form>
+                        <!-- COMPLETED and REMOVE forms -->
+                        <div>
+
+                            <?php if($todo['checked']){ ?>
+                                <form action="app/check.php" method="post" style="display: inline-block; margin-right: 5px">
+                                    <input type="hidden" name="id" value="<?php echo $todo['id']; ?>">
+                                    <button type="submit">Mark as not completed</button>
+                                </form>
+                            <?php }else { ?>
+                                <form action="app/check.php" method="post" style="display: inline-block; margin-right: 5px">
+                                    <input type="hidden" name="id" value="<?php echo $todo['id']; ?>">
+                                    <button type="submit">Mark as completed</button>
+                                </form>
+                            <?php }?>
+
+                            <form action="app/remove.php" method="post" style="display: inline-block;">
+                                <input type="hidden" name="id" value="<?php echo $todo['id']; ?>">
+                                <button type="submit">x</button>
+                            </form>
+                        </div>
                     </div>
 
                 </div>
