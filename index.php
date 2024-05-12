@@ -17,8 +17,14 @@ require 'db_conn.php';
 
         <div class="add-section">
             <form action="app/add.php" method="POST" autocomplete="off">
-                <input type="text" name="title" placeholder="Write your task">
-                <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                <?php if(isset($_GET['mess']) && $_GET['mess'] == 'error'){ ?>
+                    <input type="text" name="title" placeholder="Write your task"
+                            style="border-color:red">
+                    <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                <?php }else { ?>
+                    <input type="text" name="title" placeholder="Write your task">
+                    <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                <?php }?>
             </form>
         </div>
 
@@ -27,9 +33,11 @@ require 'db_conn.php';
         ?>
 
         <?php foreach ($todos as $todo) { ?>
+
             <div class="container" style="margin-top: 20px">
                 <div class="todo-item" style="text-align: left; margin-left: 15px;">
                     <span id="<?php echo['id']; ?>" class="remove-to-do">x </span>
+                    
                     <?php if($todo['checked']){ ?>
                         
                         <h4 style="margin-left: 0; text-decoration: line-through;"> 
@@ -45,6 +53,7 @@ require 'db_conn.php';
                         <small><?php echo "Created:", " ", $todo['date_time'] ?></small>
                         
                     <?php }?>
+
                 </div>
             </div>
         <?php }?>
